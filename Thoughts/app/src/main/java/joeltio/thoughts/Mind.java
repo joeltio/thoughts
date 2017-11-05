@@ -16,4 +16,8 @@ public class Mind {
     public boolean contains(Thought thought) {
         return this.thoughts.contains(thought);
     }
+
+    public ArrayList<Thought> getAllThoughts() {
+        return new ArrayList<>(thoughts);
+    }
 }
