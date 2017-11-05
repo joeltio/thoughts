@@ -2,17 +2,19 @@ package joeltio.thoughts;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Thought {
     private String name;
     private String body;
-    private ArrayList<String> tags;
+    private HashSet<String> tags;
     private Date creationDate;
 
-    public Thought(String name, String body, ArrayList<String> tags, Date creationDate) {
+    public Thought(String name, String body, HashSet<String> tags, Date creationDate) {
         this.name = name;
         this.body = body;
-        this.tags = new ArrayList<>(tags);
+        this.tags = new HashSet<>(tags);
         this.creationDate = creationDate;
     }
 
@@ -40,8 +42,8 @@ public class Thought {
         this.body = body;
     }
 
-    public void setTags(ArrayList<String> tags) {
-        this.tags = new ArrayList<>(tags);
+    public void setTags(HashSet<String> tags) {
+        this.tags = new HashSet<>(tags);
     }
 
     public String getName() {
@@ -52,8 +54,8 @@ public class Thought {
         return this.body;
     }
 
-    public ArrayList<String> getTags() {
-        return new ArrayList<>(this.tags);
+    public HashSet<String> getTags() {
+        return new HashSet<>(this.tags);
     }
 
     public Date getCreationDate() {

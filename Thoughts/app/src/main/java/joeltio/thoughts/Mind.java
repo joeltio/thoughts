@@ -1,6 +1,7 @@
 package joeltio.thoughts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Mind {
     private ArrayList<Thought> thoughts;
@@ -21,7 +22,7 @@ public class Mind {
         return new ArrayList<>(thoughts);
     }
 
-    public ArrayList<Thought> filterByTags(ArrayList<String> tags, boolean matchExact) {
+    public ArrayList<Thought> filterByTags(HashSet<String> tags, boolean matchExact) {
         ArrayList<Thought> filteredThoughts = new ArrayList<>();
         for (Thought thought : this.thoughts) {
             if (matchExact) {
@@ -29,11 +30,10 @@ public class Mind {
                     filteredThoughts.add(new Thought(thought));
                 }
             } else {
-                for (String tag : thought.getTags()) {
-                    if (tags.contains(tag)) {
-                        filteredThoughts.add(new Thought(thought));
-                        break;
-                    }
+                HashSet<String> tagsCopy = new HashSet<>(tags);
+                tagsCopy.retainAll(thought.getTags());
+                if (!tagsCopy.isEmpty()) {
+                    filteredThoughts.add(new Thought(thought));
                 }
             }
         }

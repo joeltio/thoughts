@@ -4,12 +4,13 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
 public class MindTest {
     private Thought createThought(String name) {
-        return new Thought(name, "", new ArrayList<String>(), new Date());
+        return new Thought(name, "", new HashSet<String>(), new Date());
     }
 
     @Test
@@ -30,15 +31,15 @@ public class MindTest {
     public void containsReturnsTrueForContainedThoughts() {
         Mind mind = new Mind();
 
-        Thought thought1 = new Thought("a", "", new ArrayList<String>(), new Date());
-        Thought thought2 = new Thought("a", "abc", new ArrayList<String>(), new Date());
+        Thought thought1 = new Thought("a", "", new HashSet<String>(), new Date());
+        Thought thought2 = new Thought("a", "abc", new HashSet<String>(), new Date());
         mind.addThought(thought1);
 
         assertTrue(mind.contains(thought1));
         assertFalse(mind.contains(thought2));
 
-        Thought thought3 = new Thought("b", "", new ArrayList<String>(), new Date());
-        Thought thought4 = new Thought("c", "", new ArrayList<String>(), new Date());
+        Thought thought3 = new Thought("b", "", new HashSet<String>(), new Date());
+        Thought thought4 = new Thought("c", "", new HashSet<String>(), new Date());
         mind.addThought(thought3);
 
         assertTrue(mind.contains(thought3));
@@ -72,10 +73,10 @@ public class MindTest {
     public void filterByTagReturnsCorrectMatchesForMatchAll() {
         Mind mind = new Mind();
 
-        ArrayList<String> tags1 = new ArrayList<>();
+        HashSet<String> tags1 = new HashSet<>();
         tags1.add("tag1");
 
-        ArrayList<String> tags12 = new ArrayList<>();
+        HashSet<String> tags12 = new HashSet<>();
         tags12.add("tag1");
         tags12.add("tag2");
 
@@ -97,13 +98,13 @@ public class MindTest {
     public void filterByTagReturnsCorrectMatches() {
         Mind mind = new Mind();
 
-        ArrayList<String> tags1 = new ArrayList<>();
+        HashSet<String> tags1 = new HashSet<>();
         tags1.add("tag1");
 
-        ArrayList<String> tags2 = new ArrayList<>();
+        HashSet<String> tags2 = new HashSet<>();
         tags2.add("tag2");
 
-        ArrayList<String> tags12 = new ArrayList<>();
+        HashSet<String> tags12 = new HashSet<>();
         tags12.add("tag1");
         tags12.add("tag2");
 
@@ -111,6 +112,8 @@ public class MindTest {
         Thought thought2 = new Thought("a", "", tags12, new Date());
         mind.addThought(thought1);
         mind.addThought(thought2);
+
+        ArrayList<Thought> allthoughtsStart = mind.getAllThoughts();
 
         ArrayList<Thought> thoughts = mind.filterByTags(tags1, false);
         assertTrue(thoughts.contains(thought1));
@@ -123,5 +126,7 @@ public class MindTest {
         thoughts = mind.filterByTags(tags2, false);
         assertFalse(thoughts.contains(thought1));
         assertTrue(thoughts.contains(thought2));
+
+        assertEquals(allthoughtsStart, mind.getAllThoughts());
     }
 }
