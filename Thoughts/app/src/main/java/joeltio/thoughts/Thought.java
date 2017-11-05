@@ -25,6 +25,18 @@ public class Thought {
                 this.creationDate.equals(((Thought) obj).getCreationDate());
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = new ArrayList<>(tags);
+    }
+
     public String getName() {
         return this.name;
     }
