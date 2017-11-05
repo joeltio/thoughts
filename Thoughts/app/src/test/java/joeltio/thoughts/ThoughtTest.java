@@ -88,4 +88,24 @@ public class ThoughtTest {
         tags.add("tag1");
         assertTrue(thought.getTags().isEmpty());
     }
+
+    @Test
+    public void thoughtDeepCopiesForCopyConstructor() {
+        String thoughtName = "";
+        String thoughtBody = "";
+        Date thoughtCreationDate = new Date(0);
+        Thought thought = new Thought(thoughtName, thoughtBody, new ArrayList<String>(), thoughtCreationDate);
+        Thought thoughtCopy = new Thought(thought);
+
+        thoughtCopy.setName("abc");
+        assertEquals("", thought.getName());
+
+        thoughtCopy.setBody("abc");
+        assertEquals("", thought.getBody());
+
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("tag");
+        thoughtCopy.setTags(tags);
+        assertTrue(thought.getTags().isEmpty());
+    }
 }
