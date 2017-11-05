@@ -44,4 +44,27 @@ public class MindTest {
         assertTrue(mind.contains(thought3));
         assertFalse(mind.contains(thought4));
     }
+
+    @Test
+    public void getAllThoughtsReturnsCopyOfAllThoughts() {
+        Mind mind = new Mind();
+
+        Thought thought1 = createThought("a");
+        mind.addThought(thought1);
+        mind.getAllThoughts().clear();
+        assertTrue(mind.getAllThoughts().contains(thought1));
+    }
+
+    @Test
+    public void addThoughtCopiesThoughts() {
+        Mind mind = new Mind();
+
+        String thoughtName = "";
+        Thought thought = createThought(thoughtName);
+        mind.addThought(thought);
+
+        assertEquals(thoughtName, mind.getAllThoughts().get(0).getName());
+        thought.setName("abc");
+        assertEquals(thoughtName, mind.getAllThoughts().get(0).getName());
+    }
 }
