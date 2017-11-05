@@ -12,7 +12,7 @@ public class Thought {
     public Thought(String name, String body, ArrayList<String> tags, Date creationDate) {
         this.name = name;
         this.body = body;
-        this.tags = tags;
+        this.tags = new ArrayList<>(tags);
         this.creationDate = creationDate;
     }
 
