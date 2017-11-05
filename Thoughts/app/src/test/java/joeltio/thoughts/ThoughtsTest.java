@@ -24,6 +24,26 @@ public class ThoughtsTest {
         assertEquals(date, thought.getCreationDate());
     }
 
+    @Test
+    public void thoughtsSetNewValues() {
+        Thought thought = new Thought("", "", new ArrayList<String>(), new Date());
+
+        String name = "name";
+        assertNotEquals(name, thought.getName());
+        thought.setName(name);
+        assertEquals(name, thought.getName());
+
+        assertNotEquals("body", thought.getBody());
+        thought.setBody("body");
+        assertEquals("body", thought.getBody());
+
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("tag1");
+        assertNotEquals(tags, thought.getTags());
+        thought.setTags(tags);
+        assertEquals(tags, thought.getTags());
+    }
+
     private Thought createThought() {
         Date date = new Date();
         ArrayList<String> tags = new ArrayList<>();
@@ -51,9 +71,19 @@ public class ThoughtsTest {
     }
 
     @Test
-    public void thoughtCopiesSetTag() {
+    public void thoughtCopiesWhenSettingTagInConstructor() {
         ArrayList<String> tags = new ArrayList<>();
         Thought thought = new Thought("", "", tags, new Date());
+        assertTrue(thought.getTags().isEmpty());
+        tags.add("tag1");
+        assertTrue(thought.getTags().isEmpty());
+    }
+
+    @Test
+    public void thoughtCopiesWhenSettingTagInSetTagMethod() {
+        Thought thought = new Thought("", "", new ArrayList<String>(), new Date());
+        ArrayList<String> tags = new ArrayList<>();
+        thought.setTags(tags);
         assertTrue(thought.getTags().isEmpty());
         tags.add("tag1");
         assertTrue(thought.getTags().isEmpty());
