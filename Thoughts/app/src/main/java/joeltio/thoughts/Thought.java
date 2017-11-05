@@ -34,7 +34,7 @@ public class Thought {
     }
 
     public ArrayList<String> getTags() {
-        return this.tags;
+        return new ArrayList<>(this.tags);
     }
 
     public Date getCreationDate() {
