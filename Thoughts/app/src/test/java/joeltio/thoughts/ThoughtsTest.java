@@ -33,6 +33,16 @@ public class ThoughtsTest {
     }
 
     @Test
+    public void getTagsReturnsCopyOfTags() {
+        Thought thought = createThought();
+        ArrayList<String> tags = thought.getTags();
+
+        assertFalse(thought.getTags().isEmpty());
+        tags.clear();
+        assertFalse(thought.getTags().isEmpty());
+    }
+
+    @Test
     public void equalThoughtsEquate() {
         Thought thought1 = createThought();
         Thought thought2 = createThought();
