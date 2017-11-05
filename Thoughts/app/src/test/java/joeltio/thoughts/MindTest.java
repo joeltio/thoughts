@@ -67,4 +67,61 @@ public class MindTest {
         thought.setName("abc");
         assertEquals(thoughtName, mind.getAllThoughts().get(0).getName());
     }
+
+    @Test
+    public void filterByTagReturnsCorrectMatchesForMatchAll() {
+        Mind mind = new Mind();
+
+        ArrayList<String> tags1 = new ArrayList<>();
+        tags1.add("tag1");
+
+        ArrayList<String> tags12 = new ArrayList<>();
+        tags12.add("tag1");
+        tags12.add("tag2");
+
+        Thought thought1 = new Thought("a", "", tags1, new Date());
+        Thought thought2 = new Thought("a", "", tags12, new Date());
+        mind.addThought(thought1);
+        mind.addThought(thought2);
+
+        ArrayList<Thought> thoughts = mind.filterByTags(tags12, true);
+        assertFalse(thoughts.contains(thought1));
+        assertTrue(thoughts.contains(thought2));
+
+        thoughts = mind.filterByTags(tags1, true);
+        assertTrue(thoughts.contains(thought1));
+        assertFalse(thoughts.contains(thought2));
+    }
+
+    @Test
+    public void filterByTagReturnsCorrectMatches() {
+        Mind mind = new Mind();
+
+        ArrayList<String> tags1 = new ArrayList<>();
+        tags1.add("tag1");
+
+        ArrayList<String> tags2 = new ArrayList<>();
+        tags2.add("tag2");
+
+        ArrayList<String> tags12 = new ArrayList<>();
+        tags12.add("tag1");
+        tags12.add("tag2");
+
+        Thought thought1 = new Thought("a", "", tags1, new Date());
+        Thought thought2 = new Thought("a", "", tags12, new Date());
+        mind.addThought(thought1);
+        mind.addThought(thought2);
+
+        ArrayList<Thought> thoughts = mind.filterByTags(tags1, false);
+        assertTrue(thoughts.contains(thought1));
+        assertTrue(thoughts.contains(thought2));
+
+        thoughts = mind.filterByTags(tags12, false);
+        assertTrue(thoughts.contains(thought1));
+        assertTrue(thoughts.contains(thought2));
+
+        thoughts = mind.filterByTags(tags2, false);
+        assertFalse(thoughts.contains(thought1));
+        assertTrue(thoughts.contains(thought2));
+    }
 }
