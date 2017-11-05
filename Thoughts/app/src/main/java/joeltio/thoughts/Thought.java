@@ -16,6 +16,13 @@ public class Thought {
         this.creationDate = creationDate;
     }
 
+    public Thought(Thought thought) {
+        this.name = thought.getName();
+        this.body = thought.getBody();
+        this.tags = thought.getTags();
+        this.creationDate = thought.getCreationDate();
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Thought &&
