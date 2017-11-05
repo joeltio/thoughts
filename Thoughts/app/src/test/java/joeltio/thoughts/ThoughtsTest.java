@@ -49,4 +49,13 @@ public class ThoughtsTest {
 
         assertTrue(thought1.equals(thought2));
     }
+
+    @Test
+    public void thoughtCopiesSetTag() {
+        ArrayList<String> tags = new ArrayList<>();
+        Thought thought = new Thought("", "", tags, new Date());
+        assertTrue(thought.getTags().isEmpty());
+        tags.add("tag1");
+        assertTrue(thought.getTags().isEmpty());
+    }
 }
