@@ -10,7 +10,7 @@ public class Mind {
     }
 
     public void addThought(Thought thought) {
-        this.thoughts.add(thought);
+        this.thoughts.add(new Thought(thought));
     }
 
     public boolean contains(Thought thought) {
