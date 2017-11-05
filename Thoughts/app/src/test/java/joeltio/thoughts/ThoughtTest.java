@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class ThoughtsTest {
+public class ThoughtTest {
     @Test
     public void thoughtsKeepsAttributes() {
         String thoughtName = "name";
