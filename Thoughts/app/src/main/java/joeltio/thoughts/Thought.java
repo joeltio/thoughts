@@ -1,18 +1,17 @@
 package joeltio.thoughts;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 public class Thought {
-    private long id;
+    private Long id;
     private String name;
     private String body;
     private HashSet<String> tags;
     private Date creationDate;
 
     public Thought(String name, String body, HashSet<String> tags, Date creationDate) {
+        this.id = null;
         this.name = name;
         this.body = body;
         this.tags = new HashSet<>(tags);
@@ -28,6 +27,7 @@ public class Thought {
     }
 
     public Thought(Thought thought) {
+        this.id = thought.getId();
         this.name = thought.getName();
         this.body = thought.getBody();
         this.tags = thought.getTags();
@@ -36,11 +36,22 @@ public class Thought {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Thought &&
-                this.name.equals(((Thought) obj).getName()) &&
-                this.body.equals(((Thought) obj).getBody()) &&
-                this.tags.equals(((Thought) obj).getTags()) &&
-                this.creationDate.equals(((Thought) obj).getCreationDate());
+        if (!(obj instanceof Thought)) {
+            return false;
+        }
+
+        if (this.id == null || ((Thought) obj).getId() == null) {
+            return this.name.equals(((Thought) obj).getName()) &&
+                    this.body.equals(((Thought) obj).getBody()) &&
+                    this.tags.equals(((Thought) obj).getTags()) &&
+                    this.creationDate.equals(((Thought) obj).getCreationDate());
+        } else {
+            return this.id.equals(((Thought) obj).getId()) &&
+                    this.name.equals(((Thought) obj).getName()) &&
+                    this.body.equals(((Thought) obj).getBody()) &&
+                    this.tags.equals(((Thought) obj).getTags()) &&
+                    this.creationDate.equals(((Thought) obj).getCreationDate());
+        }
     }
 
     public void setId(long id) {
@@ -59,7 +70,7 @@ public class Thought {
         this.tags = new HashSet<>(tags);
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
