@@ -6,12 +6,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Thought {
+    private long id;
     private String name;
     private String body;
     private HashSet<String> tags;
     private Date creationDate;
 
     public Thought(String name, String body, HashSet<String> tags, Date creationDate) {
+        this.name = name;
+        this.body = body;
+        this.tags = new HashSet<>(tags);
+        this.creationDate = creationDate;
+    }
+
+    public Thought(long id, String name, String body, HashSet<String> tags, Date creationDate) {
+        this.id = id;
         this.name = name;
         this.body = body;
         this.tags = new HashSet<>(tags);
@@ -34,6 +43,10 @@ public class Thought {
                 this.creationDate.equals(((Thought) obj).getCreationDate());
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -44,6 +57,10 @@ public class Thought {
 
     public void setTags(HashSet<String> tags) {
         this.tags = new HashSet<>(tags);
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public String getName() {
