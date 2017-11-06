@@ -98,6 +98,43 @@ public class DbAdapter {
                 new String[] {String.valueOf(id)});
     }
 
+    private void updateTags(Long id, HashSet<String> tags) {
+        HashSet<String> currentTags = getTags(id);
+
+        HashSet<String> tagsToRemove = new HashSet<>(currentTags);
+        tagsToRemove.removeAll(tags);
+
+        HashSet<String> tagsToAdd = new HashSet<>(tags);
+        tagsToAdd.removeAll(currentTags);
+
+        for (String tag : tagsToRemove) {
+            this.SQLdb.delete(TAGS_TABLE,
+                    TAGS_TABLE_COL_THOUGHT_ID + "=" + String.valueOf(id) + " AND " + TAGS_TABLE_COL_TAG + "=?",
+                    new String[] {tag});
+        }
+
+        for (String tag : tagsToAdd) {
+            ContentValues tagContentValues = new ContentValues();
+            tagContentValues.put(TAGS_TABLE_COL_THOUGHT_ID, id);
+            tagContentValues.put(TAGS_TABLE_COL_TAG, tag);
+
+            this.SQLdb.insert(TAGS_TABLE, null, tagContentValues);
+        }
+    }
+
+
+    public void updateThought(Long id, Thought thought) {
+        ContentValues thoughtContentValues = new ContentValues();
+        thoughtContentValues.put(THOUGHTS_TABLE_COL_NAME, thought.getName());
+        thoughtContentValues.put(THOUGHTS_TABLE_COL_BODY, thought.getName());
+        thoughtContentValues.put(THOUGHTS_TABLE_COL_CREATION_DATE, thought.getName());
+
+        SQLdb.update(THOUGHTS_TABLE, thoughtContentValues,
+                THOUGHTS_TABLE_COL_ID + "=" + String.valueOf(id), null);
+
+        updateTags(id, thought.getTags());
+    }
+
     public Mind getMind() {
         Mind mind = new Mind();
         Cursor cursor = this.SQLdb.query(THOUGHTS_TABLE, THOUGHTS_TABLE_COLUMNS,
