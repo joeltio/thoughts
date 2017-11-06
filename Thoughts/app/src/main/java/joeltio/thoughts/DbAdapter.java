@@ -89,6 +89,13 @@ public class DbAdapter {
         }
     }
 
+    public void removeThought(Long id) {
+        this.SQLdb.delete(TAGS_TABLE, TAGS_TABLE_COL_THOUGHT_ID + "=?",
+                new String[] {String.valueOf(id)});
+        this.SQLdb.delete(THOUGHTS_TABLE, THOUGHTS_TABLE_COL_ID + "=?",
+                new String[] {String.valueOf(id)});
+    }
+
     public Mind getMind() {
         Mind mind = new Mind();
         Cursor cursor = this.SQLdb.query(THOUGHTS_TABLE, THOUGHTS_TABLE_COLUMNS,
