@@ -101,7 +101,7 @@ public class DbAdapter {
             Date creationDate = new Date(cursor.getLong(3));
             HashSet<String> tags = getTags(id);
 
-            Thought thought = new Thought(name, body, tags, creationDate);
+            Thought thought = new Thought(id, name, body, tags, creationDate);
             mind.addThought(thought);
         }
 
