@@ -23,7 +23,7 @@ public class ThoughtTest {
         assertEquals(tags, thought1.getTags());
         assertEquals(date, thought1.getCreationDate());
 
-        long thoughtId = 1;
+        Long thoughtId = 1L;
         Thought thought2 = new Thought(thoughtId, thoughtName, thoughtBody, tags, date);
 
         assertEquals(thoughtId, thought2.getId());
@@ -36,6 +36,11 @@ public class ThoughtTest {
     @Test
     public void thoughtsSetNewValues() {
         Thought thought = new Thought("", "", new HashSet<String>(), new Date());
+
+        Long id = 1L;
+        assertNotEquals(id, thought.getId());
+        thought.setId(id);
+        assertEquals(id, thought.getId());
 
         String name = "name";
         assertNotEquals(name, thought.getName());
@@ -80,6 +85,25 @@ public class ThoughtTest {
     }
 
     @Test
+    public void equalThoughtsWithUnequalIdsDoNotEquate() {
+        Thought thought1 = createThought();
+        thought1.setId(1);
+        Thought thought2 = createThought();
+        thought2.setId(2);
+
+        assertFalse(thought1.equals(thought2));
+    }
+
+    @Test
+    public void equalThoughtsWithOneThatHasNoIdEquate() {
+        Thought thought1 = createThought();
+        thought1.setId(1);
+        Thought thought2 = createThought();
+
+        assertTrue(thought1.equals(thought2));
+    }
+
+    @Test
     public void thoughtCopiesWhenSettingTagInConstructor() {
         HashSet<String> tags = new HashSet<>();
         Thought thought = new Thought("", "", tags, new Date());
@@ -100,18 +124,22 @@ public class ThoughtTest {
 
     @Test
     public void thoughtDeepCopiesForCopyConstructor() {
-        String thoughtName = "";
-        String thoughtBody = "";
-        Date thoughtCreationDate = new Date(0);
-        Thought thought = new Thought(thoughtName, thoughtBody, new HashSet<String>(), thoughtCreationDate);
+        Thought thought = new Thought(1L, "", "", new HashSet<String>(), new Date(0));
         Thought thoughtCopy = new Thought(thought);
 
+        assertEquals(1, (long) thoughtCopy.getId());
+        thoughtCopy.setId(2);
+        assertEquals(1, (long) thought.getId());
+
+        assertEquals("", thoughtCopy.getName());
         thoughtCopy.setName("abc");
         assertEquals("", thought.getName());
 
+        assertEquals("", thoughtCopy.getBody());
         thoughtCopy.setBody("abc");
         assertEquals("", thought.getBody());
 
+        assertTrue(thoughtCopy.getTags().isEmpty());
         HashSet<String> tags = new HashSet<>();
         tags.add("tag");
         thoughtCopy.setTags(tags);
