@@ -72,14 +72,22 @@ public class DatabaseTest {
     }
 
     @Test
+    public void insertThoughtSetsIdOfThought() {
+        Thought thought = createThought("a");
+        assertNull(thought.getId());
+        dbAdapter.insertThought(thought);
+        assertNotNull(thought.getId());
+    }
+
+    @Test
     public void deleteThoughtRemovesThought() {
         Thought thought1 = createThought("a");
         thought1.setId(1);
         Thought thought2 = createThought("b");
         thought2.setId(2);
 
-        dbAdapter.insertThought(thought1);
         dbAdapter.insertThought(thought2);
+        dbAdapter.insertThought(thought1);
 
         assertEquals(2, dbAdapter.getMind().getAllThoughts().size());
         dbAdapter.removeThought(thought1.getId());
