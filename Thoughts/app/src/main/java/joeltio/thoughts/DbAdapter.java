@@ -87,6 +87,8 @@ public class DbAdapter {
             tagsTableValues.put(TAGS_TABLE_COL_TAG, tag);
             this.SQLdb.insert(TAGS_TABLE, null, tagsTableValues);
         }
+
+        thought.setId(id);
     }
 
     public void removeThought(Long id) {
