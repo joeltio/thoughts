@@ -102,4 +102,33 @@ public class DatabaseTest {
         assertEquals(thought2, mind.getAllThoughts().get(0));
         dbAdapter2.close();
     }
+
+    @Test
+    public void updateThoughtChangesThought() {
+        Thought thought1 = createThought("a");
+        Thought thought2 = createThought("b");
+
+        dbAdapter.insertThought(thought1);
+
+        dbAdapter.getMind().getAllThoughts();
+
+        dbAdapter.updateThought(thought1.getId(), thought2);
+        assertEquals(thought2, dbAdapter.getMind().getAllThoughts().get(0));
+
+        DbAdapter dbAdapter2 = new DbAdapter(RuntimeEnvironment.application);
+        dbAdapter2.open();
+        assertEquals(thought2, dbAdapter2.getMind().getAllThoughts().get(0));
+        dbAdapter2.close();
+    }
+
+    @Test
+    public void updateThoughtDoesNotChangeIdOfThought() {
+        Thought thought1 = createThought("a");
+        Thought thought2 = createThought("b");
+        assertNull(thought2.getId());
+        dbAdapter.insertThought(thought1);
+
+        dbAdapter.updateThought(thought1.getId(), thought2);
+        assertNull(thought2.getId());
+    }
 }
