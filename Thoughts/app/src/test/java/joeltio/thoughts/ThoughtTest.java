@@ -16,12 +16,21 @@ public class ThoughtTest {
         tags.add("tag1");
         tags.add("tag2");
         Date date = new Date();
-        Thought thought = new Thought(thoughtName, thoughtBody, tags, date);
+        Thought thought1 = new Thought(thoughtName, thoughtBody, tags, date);
 
-        assertEquals(thoughtName, thought.getName());
-        assertEquals(thoughtBody, thought.getBody());
-        assertEquals(tags, thought.getTags());
-        assertEquals(date, thought.getCreationDate());
+        assertEquals(thoughtName, thought1.getName());
+        assertEquals(thoughtBody, thought1.getBody());
+        assertEquals(tags, thought1.getTags());
+        assertEquals(date, thought1.getCreationDate());
+
+        long thoughtId = 1;
+        Thought thought2 = new Thought(thoughtId, thoughtName, thoughtBody, tags, date);
+
+        assertEquals(thoughtId, thought2.getId());
+        assertEquals(thoughtName, thought2.getName());
+        assertEquals(thoughtBody, thought2.getBody());
+        assertEquals(tags, thought2.getTags());
+        assertEquals(date, thought2.getCreationDate());
     }
 
     @Test
