@@ -50,4 +50,24 @@ public class DatabaseTest {
         assertTrue(mind2.getAllThoughts().contains(thought));
         dbAdapter2.close();
     }
+
+    @Test
+    public void getMindReturnsThoughtsWithId() {
+        Thought thought1 = createThought("a");
+        thought1.setId(1);
+        Thought thought2 = createThought("b");
+        thought2.setId(2);
+
+        dbAdapter.insertThought(thought1);
+        dbAdapter.insertThought(thought2);
+
+        Mind mind = dbAdapter.getMind();
+        for (Thought thought : mind.getAllThoughts()) {
+            assertNotNull(thought.getId());
+        }
+
+        assertTrue(mind.getAllThoughts().contains(thought1));
+        thought1.setId(2);
+        assertFalse(mind.getAllThoughts().contains(thought1));
+    }
 }
