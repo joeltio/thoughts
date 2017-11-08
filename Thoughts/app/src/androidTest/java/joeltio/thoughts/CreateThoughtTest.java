@@ -46,7 +46,7 @@ public class CreateThoughtTest {
         String thoughtBody = "The quick brown fox jumped over the fence.";
         onView(withId(R.id.thought_name_field)).perform(typeText(thoughtName));
         onView(withId(R.id.thought_body_field)).perform(typeText(thoughtBody));
-        onView(withId(R.id.thought_tags_field)).perform(typeText("tag1"));
+        onView(withId(R.id.thought_tags_field)).perform(scrollTo(), typeText("tag1"));
         onView(withId(R.id.action_thought_done)).perform(click());
 
         Mind mind = getMind();
@@ -64,7 +64,7 @@ public class CreateThoughtTest {
                 .check(matches(not(withText(containsString("\n")))));
 
         onView(withId(R.id.thought_body_field)).perform(typeText("a"));
-        onView(withId(R.id.thought_tags_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_tags_field)).perform(scrollTo(), typeText("a"));
         onView(withId(R.id.action_thought_done)).perform(click());
 
         Mind mind = getMind();
@@ -76,7 +76,7 @@ public class CreateThoughtTest {
     public void tagsFieldSingleLine() {
         onView(withId(R.id.thought_name_field)).perform(typeText("a"));
         onView(withId(R.id.thought_body_field)).perform(typeText("a"));
-        onView(withId(R.id.thought_tags_field)).perform(typeText("a\n"))
+        onView(withId(R.id.thought_tags_field)).perform(scrollTo(), typeText("a\n"))
                 .check(matches(not(withText(containsString("\n")))));
         onView(withId(R.id.action_thought_done)).perform(click());
 
