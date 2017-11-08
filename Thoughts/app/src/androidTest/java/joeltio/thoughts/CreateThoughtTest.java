@@ -84,4 +84,25 @@ public class CreateThoughtTest {
         Thought thought = mind.getAllThoughts().get(0);
         assertTrue(thought.getTags().contains("a"));
     }
+
+    @Test
+    public void disallowEmptyNameAndBody() {
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        Mind mind = getMind();
+        assertTrue(mind.getAllThoughts().isEmpty());
+
+        onView(withId(R.id.thought_name_field)).perform(typeText("a"));
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        mind = getMind();
+        assertTrue(mind.getAllThoughts().isEmpty());
+
+        onView(withId(R.id.thought_name_field)).perform(clearText());
+        onView(withId(R.id.thought_body_field)).perform(typeText("a"));
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        mind = getMind();
+        assertTrue(mind.getAllThoughts().isEmpty());
+    }
 }
