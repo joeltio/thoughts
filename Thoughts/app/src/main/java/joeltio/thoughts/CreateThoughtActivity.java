@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -37,8 +38,9 @@ public class CreateThoughtActivity extends AppCompatActivity {
         if (id == R.id.action_thought_done) {
             String name = this.thoughtNameEditText.getText().toString();
             String body = this.thoughtBodyEditText.getText().toString();
-            HashSet<String> tags = new HashSet<>();
-            tags.add(this.thoughtTagsEditText.getText().toString());
+            String tagsString = this.thoughtTagsEditText.getText().toString();
+
+            HashSet<String> tags = new HashSet<>(Arrays.asList(tagsString.split(",")));
 
             if (name.isEmpty() || body.isEmpty()) {
                 return false;
