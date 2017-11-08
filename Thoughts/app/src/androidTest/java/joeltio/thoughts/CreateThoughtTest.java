@@ -122,4 +122,11 @@ public class CreateThoughtTest {
         assertTrue(tags.contains("tag1"));
         assertTrue(tags.contains("tag2"));
     }
+
+    @Test
+    public void cancelCreateThought() {
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
+
+        assertTrue(activityRule.getActivity().isFinishing());
+    }
 }
