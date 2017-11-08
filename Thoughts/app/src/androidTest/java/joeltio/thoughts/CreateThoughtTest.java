@@ -13,6 +13,8 @@ import static android.support.test.espresso.Espresso.*;
 import static android.support.test.espresso.assertion.ViewAssertions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static android.support.test.espresso.action.ViewActions.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 
@@ -54,8 +56,8 @@ public class CreateThoughtTest {
 
     @Test
     public void nameFieldSingleLine() {
-        onView(withId(R.id.thought_name_field)).perform(typeText("a\nb"));
-        onView(withId(R.id.thought_name_field)).check(matches(withText("a")));
+        onView(withId(R.id.thought_name_field)).perform(typeText("a\n"))
+                .check(matches(not(withText(containsString("\n")))));
 
         onView(withId(R.id.thought_body_field)).perform(typeText("a"));
         onView(withId(R.id.thought_tags_field)).perform(typeText("a"));
@@ -68,5 +70,22 @@ public class CreateThoughtTest {
 
         Thought thought = mind.getAllThoughts().get(0);
         assertEquals("a", thought.getName());
+    }
+
+    @Test
+    public void tagsFieldSingleLine() {
+        onView(withId(R.id.thought_name_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_body_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_tags_field)).perform(typeText("a\n"))
+                .check(matches(not(withText(containsString("\n")))));
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
+        dbAdapter.open();
+        Mind mind = dbAdapter.getMind();
+        dbAdapter.close();
+
+        Thought thought = mind.getAllThoughts().get(0);
+        assertTrue(thought.getTags().contains("a"));
     }
 }
