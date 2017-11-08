@@ -27,6 +27,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_edit_text"
             android:hint="@string/thought_field_body_hint"
+            android:minHeight="@dimen/thought_body_field_height"
+            android:gravity="top"
             android:layout_marginTop="@dimen/thought_field_vertical_margin"
             android:layout_marginBottom="@dimen/thought_field_vertical_margin"
             android:layout_marginStart="@dimen/thought_field_horizontal_margin"

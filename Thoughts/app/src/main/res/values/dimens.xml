@@ -3,4 +3,5 @@
     <dimen name="thought_fields_internal_padding">5dp</dimen>
     <dimen name="thought_field_horizontal_margin">5dp</dimen>
     <dimen name="thought_field_vertical_margin">2dp</dimen>
+    <dimen name="thought_body_field_height">300dp</dimen>
 </resources>
