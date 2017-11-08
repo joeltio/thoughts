@@ -40,6 +40,10 @@ public class CreateThoughtActivity extends AppCompatActivity {
             HashSet<String> tags = new HashSet<>();
             tags.add(this.thoughtTagsEditText.getText().toString());
 
+            if (name.isEmpty() || body.isEmpty()) {
+                return false;
+            }
+
             Thought thought = new Thought(name, body, tags, new Date());
 
             DbAdapter dbAdapter = new DbAdapter(this);
