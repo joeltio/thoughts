@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Thoughts</string>
+    <string name="action_thought_done">Done</string>
+    <string name="thought_field_name_hint">Name</string>
+    <string name="thought_field_body_hint">Body</string>
+    <string name="thought_field_tags_hint">Tags</string>
 </resources>
