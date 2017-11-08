@@ -70,6 +70,8 @@ public class CreateThoughtActivity extends AppCompatActivity {
             dbAdapter.open();
             dbAdapter.insertThought(thought);
             dbAdapter.close();
+
+            finish();
         } else if (id == android.R.id.home) {
             finish();
         }
