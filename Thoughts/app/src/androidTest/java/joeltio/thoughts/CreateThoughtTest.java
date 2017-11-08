@@ -32,6 +32,14 @@ public class CreateThoughtTest {
         dbAdapter.close();
     }
 
+    private Mind getMind() {
+        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
+        dbAdapter.open();
+        Mind mind = dbAdapter.getMind();
+        dbAdapter.close();
+        return mind;
+    }
+
     @Test
     public void activitySavesThoughtsIntoDatabase() {
         String thoughtName = "Test thought 1";
@@ -41,11 +49,7 @@ public class CreateThoughtTest {
         onView(withId(R.id.thought_tags_field)).perform(typeText("tag1"));
         onView(withId(R.id.action_thought_done)).perform(click());
 
-        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
-        dbAdapter.open();
-        Mind mind = dbAdapter.getMind();
-        dbAdapter.close();
-
+        Mind mind = getMind();
         assertEquals(1, mind.getAllThoughts().size());
         Thought thought = mind.getAllThoughts().get(0);
         assertEquals(thoughtName, thought.getName());
@@ -63,11 +67,7 @@ public class CreateThoughtTest {
         onView(withId(R.id.thought_tags_field)).perform(typeText("a"));
         onView(withId(R.id.action_thought_done)).perform(click());
 
-        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
-        dbAdapter.open();
-        Mind mind = dbAdapter.getMind();
-        dbAdapter.close();
-
+        Mind mind = getMind();
         Thought thought = mind.getAllThoughts().get(0);
         assertEquals("a", thought.getName());
     }
@@ -80,11 +80,7 @@ public class CreateThoughtTest {
                 .check(matches(not(withText(containsString("\n")))));
         onView(withId(R.id.action_thought_done)).perform(click());
 
-        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
-        dbAdapter.open();
-        Mind mind = dbAdapter.getMind();
-        dbAdapter.close();
-
+        Mind mind = getMind();
         Thought thought = mind.getAllThoughts().get(0);
         assertTrue(thought.getTags().contains("a"));
     }
