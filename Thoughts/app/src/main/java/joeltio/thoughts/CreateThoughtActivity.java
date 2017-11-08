@@ -1,5 +1,6 @@
 package joeltio.thoughts;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +29,10 @@ public class CreateThoughtActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_thought);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         this.thoughtNameEditText = findViewById(R.id.thought_name_field);
         this.thoughtBodyEditText = findViewById(R.id.thought_body_field);
@@ -65,6 +70,8 @@ public class CreateThoughtActivity extends AppCompatActivity {
             dbAdapter.open();
             dbAdapter.insertThought(thought);
             dbAdapter.close();
+        } else if (id == android.R.id.home) {
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
