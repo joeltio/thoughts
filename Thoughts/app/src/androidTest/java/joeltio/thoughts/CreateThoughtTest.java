@@ -51,4 +51,22 @@ public class CreateThoughtTest {
         assertEquals(1, thought.getTags().size());
         assertTrue(thought.getTags().contains("tag1"));
     }
+
+    @Test
+    public void nameFieldSingleLine() {
+        onView(withId(R.id.thought_name_field)).perform(typeText("a\nb"));
+        onView(withId(R.id.thought_name_field)).check(matches(withText("a")));
+
+        onView(withId(R.id.thought_body_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_tags_field)).perform(typeText("a"));
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        DbAdapter dbAdapter = new DbAdapter(activityRule.getActivity());
+        dbAdapter.open();
+        Mind mind = dbAdapter.getMind();
+        dbAdapter.close();
+
+        Thought thought = mind.getAllThoughts().get(0);
+        assertEquals("a", thought.getName());
+    }
 }
