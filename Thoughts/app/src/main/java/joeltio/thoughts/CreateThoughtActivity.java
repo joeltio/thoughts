@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
 import java.util.Arrays;
@@ -14,6 +16,13 @@ public class CreateThoughtActivity extends AppCompatActivity {
     EditText thoughtNameEditText;
     EditText thoughtBodyEditText;
     EditText thoughtTagsEditText;
+
+    private void shakeEditText(EditText editText) {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(200);
+        shake.setInterpolator(new CycleInterpolator(7));
+        editText.startAnimation(shake);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,11 @@ public class CreateThoughtActivity extends AppCompatActivity {
 
             HashSet<String> tags = new HashSet<>(Arrays.asList(tagsString.split(",")));
 
-            if (name.isEmpty() || body.isEmpty()) {
+            if (name.isEmpty()) {
+                shakeEditText(this.thoughtNameEditText);
+                return false;
+            } else if (body.isEmpty()) {
+                shakeEditText(this.thoughtBodyEditText);
                 return false;
             }
 
