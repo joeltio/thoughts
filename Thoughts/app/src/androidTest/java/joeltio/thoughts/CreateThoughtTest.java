@@ -9,6 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashSet;
+
 import static android.support.test.espresso.Espresso.*;
 import static android.support.test.espresso.assertion.ViewAssertions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
@@ -104,5 +106,20 @@ public class CreateThoughtTest {
 
         mind = getMind();
         assertTrue(mind.getAllThoughts().isEmpty());
+    }
+
+    @Test
+    public void separateTagsWithCommaDelimiter() {
+        onView(withId(R.id.thought_name_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_body_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_tags_field)).perform(scrollTo(), typeText("tag1,tag2"));
+
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        Mind mind = getMind();
+        HashSet<String> tags = mind.getAllThoughts().get(0).getTags();
+        assertEquals(2, tags.size());
+        assertTrue(tags.contains("tag1"));
+        assertTrue(tags.contains("tag2"));
     }
 }
