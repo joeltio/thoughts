@@ -129,4 +129,14 @@ public class CreateThoughtTest {
 
         assertTrue(activityRule.getActivity().isFinishing());
     }
+
+    @Test
+    public void finishActivityWhenDoneCreatingThought() {
+        onView(withId(R.id.thought_name_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_body_field)).perform(typeText("a"));
+        onView(withId(R.id.thought_tags_field)).perform(scrollTo(), typeText("a"));
+        onView(withId(R.id.action_thought_done)).perform(click());
+
+        assertTrue(activityRule.getActivity().isFinishing());
+    }
 }
